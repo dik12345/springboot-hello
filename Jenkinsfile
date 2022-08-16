@@ -5,9 +5,10 @@ pipeline {
 }
 
     stages {
-        stage('SCM') {
+        stage('Compile and Clean') { 
             steps {
-		sh git 'https://github.com/dik12345/springboot-hello.git'
+                // Run Maven on a Unix agent.
+              
                 sh "mvn clean compile"
             }
         }
