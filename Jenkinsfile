@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo "Hello web Application"
                 sh 'ls'
-                sh 'docker build -t shine1234/docker_jenkins_springboot:${BUILD_NUMBER} .'
+                sh 'sudo docker build -t shine1234/docker_jenkins_springboot:${BUILD_NUMBER} .'
            }
         }
         stage('Docker Login'){
@@ -29,19 +29,19 @@ pipeline {
             steps {
                withCredentials([string(credentialsId: 'dockerid', variable: 'DOCKERPWD')]) {
 		    
-                   sh "docker login -u shine1234 -p ${DOCKERPWD}"
+                   sh "sudo docker login -u shine1234 -p ${DOCKERPWD}"
                 }
             }                
         }
 	stage('Docker Push'){
             steps {
-                sh 'docker push shine1234/docker_jenkins_springboot:${BUILD_NUMBER}'
+                sh 'sudo docker push shine1234/docker_jenkins_springboot:${BUILD_NUMBER}'
             }
         }
         stage('Docker deploy'){
             steps {
                
-                sh 'docker run -itd -p  8081:8080 shine1234/docker_jenkins_springboot:${BUILD_NUMBER}'
+                sh 'sudo docker run -itd -p  8081:8080 shine1234/docker_jenkins_springboot:${BUILD_NUMBER}'
             }
         }
  	stage('Archving') { 
